@@ -1,0 +1,83 @@
+    @font-face {
+        font-family: "Qanelas-Light";
+        src: url("https://db.onlinewebfonts.com/t/a4ad0590adc96fed2841ac5600d82bf3.eot");
+        src: url("https://db.onlinewebfonts.com/t/a4ad0590adc96fed2841ac5600d82bf3.eot?#iefix")format("embedded-opentype"),
+        url("https://db.onlinewebfonts.com/t/a4ad0590adc96fed2841ac5600d82bf3.woff2")format("woff2"),
+        url("https://db.onlinewebfonts.com/t/a4ad0590adc96fed2841ac5600d82bf3.woff")format("woff"),
+        url("https://db.onlinewebfonts.com/t/a4ad0590adc96fed2841ac5600d82bf3.ttf")format("truetype"),
+        url("https://db.onlinewebfonts.com/t/a4ad0590adc96fed2841ac5600d82bf3.svg#Qanelas-Light")format("svg");
+    }
+    body {
+      font-family: "Qanelas-Light";
+      margin: 0px 10px;
+      padding: 0;
+      width: auto;
+      height: auto;
+      background-color: transparent;
+    }
+    .container{
+        width: 350px;
+        height: 100vh;
+        background-image: url('bg.png');
+          background-size: cover;
+    background-position: center;
+    display: inline-block;
+    }
+    .calendar-container{
+        padding: 10px;
+        width: 350px;
+        height: 100vh;
+        background: rgba(235, 239, 241, 0.04);
+        box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(85px);
+        
+    }
+    .calendar {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+    }
+    .h1{
+        color: white;
+        font-size: 1.0rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        margin-top: 1rem;;
+    }
+    .fc .fc-day-today {
+    background-color: transparent !important; 
+    }
+    .fc-dayGridDay-view{
+        background-color: transparent !important;
+    }
+    .fc-scrollgrid,
+    .fc-view-harness,
+    .fc-theme-standard td, 
+    .fc-theme-standard th {
+        border: transparent !important;
+    }
+    .fc-daygrid-event-harness{
+        background-color: transparent !important;
+    }
+    .fc .fc-col-header-cell-cushion {
+        color: white;
+    }
+    .fc .fc-toolbar-title {
+        color: white;
+        font-size: 1.3rem !important;
+        margin-top:  1rem;
+    }
+    .fc .fc-event {
+        color: white;
+        font-size: 0.8rem;
+        margin-bottom: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border-left: 3px solid #97C1E7;
+        padding-left: 1rem;
+    }
+    .fc .fc-col-header {
+        display: none;
+    }
+    
+

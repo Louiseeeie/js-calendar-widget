@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.cdnfonts.com/css/qanelas" rel="stylesheet">
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.19/index.global.min.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <div class="calendar-container">
+       <div id="calendar" class="calendar"></div>
+    </div>
+  </div>
+
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+       
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridDay',
+          headerToolbar: {
+            left: 'title',     
+            center: '',
+            right: ''    
+          },
+          googleCalendarApiKey: 'AIzaSyBGUY5IcAf1AXNWcWZMeb8LKSRQXIIbxKk',
+          events: {
+            googleCalendarId: 'ia2td03s4eckpcqn31dctu9mkhflva8r@import.calendar.google.com'
+          },
+
+          eventClick: function(info) {
+            // stop FullCalendar from following the event's default URL
+            info.jsEvent.preventDefault();
+            // open paperly
+            window.open('https://sth.paperlyapp.com/public/calendar', '_blank');
+          },
+          
+          eventContent: function(arg) {
+          // create a container div and force vertical layout
+          let container = document.createElement('div');
+          container.style.display = 'flex';
+          container.style.flexDirection = 'column'; 
+          container.style.alignItems = 'flex-start'; 
+
+          let titleEl = document.createElement('div');
+          titleEl.innerText = arg.event.title;
+          
+          // Format time
+          let start = arg.event.start;
+          let end = arg.event.end;
+
+          function formatTime(date) {
+            if (!date) return '';
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            let ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            if (hours === 0) hours = 12;
+            return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ampm;
+          }
+
+          let timeEl = document.createElement('div');
+          timeEl.innerText = formatTime(start) + (end ? ' - ' + formatTime(end) : '');
+
+          container.appendChild(timeEl);
+          container.appendChild(titleEl);
+        
+          return { domNodes: [container] };
+        }
+
+        });
+        calendar.render();
+      });
+
+  </script>
+</body>
+</html>
