@@ -19,7 +19,31 @@
   <script>
    document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
-       
+
+        // Helper: does an event overlap the current day?
+        function eventOccursOnDate(ev, date) {
+          var y = date.getFullYear(), m = date.getMonth(), d = date.getDate();
+          var dayStart = new Date(y, m, d, 0, 0, 0, 0);
+          var dayEnd = new Date(y, m, d, 23, 59, 59, 999);
+          var start = ev.start;
+          var end = ev.end || ev.start;
+          return start <= dayEnd && end >= dayStart;
+        }
+
+        // Ensure a "no events" message element exists inside the day's event area
+        function ensureNoEventsEl() {
+          var dayEventsContainer = calendarEl.querySelector('.fc-daygrid-day-events');
+          if (!dayEventsContainer) return null;
+          var msg = dayEventsContainer.querySelector('.no-events-message');
+          if (!msg) {
+            msg = document.createElement('div');
+            msg.className = 'no-events-message';
+            msg.innerText = 'No Junior School Events today';
+            dayEventsContainer.appendChild(msg);
+          }
+          return msg;
+        }
+
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridDay',
           headerToolbar: {
@@ -29,7 +53,7 @@
           },
           googleCalendarApiKey: 'AIzaSyBGUY5IcAf1AXNWcWZMeb8LKSRQXIIbxKk',
           events: {
-            googleCalendarId: 'ia2td03s4eckpcqn31dctu9mkhflva8r@import.calendar.google.com'
+            googleCalendarId: '3udh9bqofvrth46lhlbacp0r2kq18hv2%40import.calendar.google.com&ctz=Australia%2FPerth'
           },
 
           eventClick: function(info) {
@@ -66,15 +90,35 @@
           let timeEl = document.createElement('div');
           timeEl.innerText = formatTime(start) + (end ? ' - ' + formatTime(end) : '');
 
+          // Removed incorrect check: if (!title) return "no";
           container.appendChild(timeEl);
           container.appendChild(titleEl);
-        
+            
           return { domNodes: [container] };
-        }
+        },
 
-        });
-        calendar.render();
+        // NEW: update message when events or dates change
+        eventsSet: function() {
+          updateNoEventsMessage();
+        },
+        datesSet: function() {
+          // wait for DOM update before checking
+          setTimeout(updateNoEventsMessage, 0);
+        }
       });
+
+      function updateNoEventsMessage() {
+        var msgEl = ensureNoEventsEl();
+        if (!msgEl) return;
+        var events = calendar.getEvents();
+        var currentDate = calendar.getDate();
+        var hasEvent = events.some(function(ev) { return eventOccursOnDate(ev, currentDate); });
+        msgEl.style.display = hasEvent ? 'none' : 'block';
+      }
+
+      calendar.render();
+      updateNoEventsMessage();
+    });
 
   </script>
 </body>
